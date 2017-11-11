@@ -2,36 +2,38 @@ function tspgui()
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-NIND=50;		% Number of individuals
-MAXGEN=100;		% Maximum no. of generations
-NVAR=26;		% No. of variables
-PRECI=1;		% Precision of variables
-ELITIST=0.05;    % percentage of the elite population
-GGAP=1-ELITIST;		% Generation gap
-STOP_PERCENTAGE=.95;    % percentage of equal fitness individuals for stopping
-PR_CROSS=.95;     % probability of crossover
-PR_MUT=.05;       % probability of mutation
-LOCALLOOP=0;      % local loop removal
+NIND = 50;		% Number of individuals
+MAXGEN = 100;		% Maximum no. of generations
+NVAR = 26;		% No. of variables
+PRECI = 1;		% Precision of variables
+ELITIST = 0.05;    % percentage of the elite population
+GGAP = 1-ELITIST;		% Generation gap
+STOP_PERCENTAGE = .95;    % percentage of equal fitness individuals for stopping
+PR_CROSS = .95;     % probability of crossover
+PR_MUT = .05;       % probability of mutation
+LOCALLOOP = 0;      % local loop removal
 CROSSOVER = 'xalt_edges';  % default crossover operator
+REPRESENTATION = 2; % The type of representation used in the ga. 
+% 1 - Path, 2 - Adjacency, 3 - Ordinal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % read an existing population
 % 1 -- to use the input file specified by the filename
 % 0 -- click the cities yourself, which will be saved in the file called
-%USE_FILE=0;
-%FILENAME='data/cities.xy';
-%if (USE_FILE==0)
+%USE_FILE = 0;
+%FILENAME = 'data/cities.xy';
+%if (USE_FILE == 0)
 %    % get the input cities
 %    fg1 = figure(1);clf;
 %    %subplot(2,2,2);
 %    axis([0 1 0 1]);
 %    title(NVAR);
 %    hold on;
-%    x=zeros(NVAR,1);y=zeros(NVAR,1);
-%    for v=1:NVAR
-%        [xi,yi]=ginput(1);
-%        x(v)=xi;
-%        y(v)=yi;
+%    x = zeros(NVAR,1);y = zeros(NVAR,1);
+%    for v = 1:NVAR
+%        [xi,yi] = ginput(1);
+%        x(v) = xi;
+%        y(v) = yi;
 %        plot(xi,yi, 'ko','MarkerFaceColor','Black');
 %        title(NVAR-v);
 %    end
@@ -39,22 +41,22 @@ CROSSOVER = 'xalt_edges';  % default crossover operator
 %    set(fg1, 'Visible', 'off');
 %    dlmwrite(FILENAME,[x y],'\t');
 %else
-%    XY=dlmread(FILENAME,'\t');
-%    x=XY(:,1);
-%    y=XY(:,2);
+%    XY = dlmread(FILENAME,'\t');
+%    x = XY(:,1);
+%    y = XY(:,2);
 %end
 
 % load the data sets
 datasetslist = dir('datasets/');datasetslist = dir('datasets/');
-datasets=cell( size(datasetslist,1)-2,1);datasets=cell( size(datasetslist,1)-2 ,1);
-for i=1:size(datasets,1);
+datasets = cell( size(datasetslist,1)-2,1);datasets = cell( size(datasetslist,1)-2 ,1);
+for i = 1:size(datasets,1);
     datasets{i} = datasetslist(i+2).name;
 end
 
 % start with first dataset
 data = load(['datasets/' datasets{1}]);
-x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]);
-NVAR=size(data,1);
+x = data(:,1)/max([data(:,1);data(:,2)]);y = data(:,2)/max([data(:,1);data(:,2)]);
+NVAR = size(data,1);
 
 datasets
 
@@ -107,16 +109,16 @@ set(fh,'Visible','on');
         dataset = datasets{dataset_value};
         % load the dataset
         data = load(['datasets/' dataset]);
-        x=data(:,1)/max([data(:,1);data(:,2)]);y=data(:,2)/max([data(:,1);data(:,2)]);
-        %x=data(:,1);y=data(:,2);
-        NVAR=size(data,1); 
+        x = data(:,1)/max([data(:,1);data(:,2)]);y = data(:,2)/max([data(:,1);data(:,2)]);
+        %x = data(:,1);y = data(:,2);
+        NVAR = size(data,1); 
         set(ncitiessliderv,'String',size(data,1));
         axes(ah1);
         plot(x,y,'ko') 
     end
     function llooppopup_Callback(hObject,eventdata)
         lloop_value = get(hObject,'Value');
-        if lloop_value==1
+        if lloop_value == 1
             LOCALLOOP = 0;
         else
             LOCALLOOP = 1;
@@ -178,7 +180,8 @@ set(fh,'Visible','on');
         set(mutslider,'Visible','off');
         set(crossslider,'Visible','off');
         set(elitslider,'Visible','off');
-        run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3);
+        run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, ...
+        PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, REPRESENTATION);
         end_run();
     end
     function inputbutton_Callback(hObject,eventdata)
