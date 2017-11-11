@@ -60,12 +60,12 @@ datasets
 
 % initialise the user interface
 fh = figure('Visible','off','Name','TSP Tool','Position',[0,0,1024,768]);
-ah1 = axes('Parent',fh,'Position',[.1 .55 .4 .4]);
+ah1 = axes('Parent',fh,'Position',[.1 .57 .4 .4]);
 plot(x,y,'ko')
-ah2 = axes('Parent',fh,'Position',[.55 .55 .4 .4]);
+ah2 = axes('Parent',fh,'Position',[.55 .57 .4 .4]);
 axes(ah2);
 xlabel('Generation');
-ylabel('Distance (Min. - Gem. - Max.)');
+ylabel('Distance');
 ah3 = axes('Parent',fh,'Position',[.1 .1 .4 .4]);
 axes(ah3);
 title('Histogram');
