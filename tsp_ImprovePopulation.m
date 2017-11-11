@@ -25,7 +25,7 @@ if (improve)
      
      result = improve_path(ncities, conv_repr(pop(i, :), repr, 1), dists);
   
-     pop(i, :) = convrepr(result, 1, repr);
+     pop(i, :) = conv_repr(result, 1, repr);
 
    end
 end
