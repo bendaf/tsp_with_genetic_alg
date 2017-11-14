@@ -22,6 +22,8 @@ function NewChrom = mutateTSP(MUT_F, OldChrom, MutOpt, Repr)
    if nargin < 2,  error('Not enough input parameters'); end
 
 [rows, cols] = size(OldChrom);
+
+
 NewChrom = OldChrom;
 
 for r = 1:rows
