@@ -1,7 +1,6 @@
 function [x y] = input_cities(ncities)
         % get the input cities
         fg1 = figure(1);clf;
-        %subplot(2,2,2);
         axis([0 1 0 1]);
         title(ncities);
         hold on;

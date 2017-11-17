@@ -113,7 +113,6 @@ runbutton = uicontrol(ph,'Style','pushbutton','String','START', ...
 
 set(fh,'Visible','on');
 
-
     function datasetpopup_Callback(hObject, eventdata)
         dataset_value = get(hObject,'Value');
         dataset = datasets{dataset_value};
@@ -195,11 +194,6 @@ set(fh,'Visible','on');
         run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, ...
         PR_MUT, CROSSOVER, MUTATION, LOCALLOOP, ah1, ah2, ah3, REPRESENTATION);
         end_run();
-    end
-    function inputbutton_Callback(hObject,eventdata)
-        [x y] = input_cities(NVAR);
-        axes(ah1);
-        plot(x,y,'ko')
     end
     function end_run()
         %set(ncitiesslider,'Visible','on');
