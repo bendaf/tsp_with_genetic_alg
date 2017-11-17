@@ -60,6 +60,9 @@ NVAR = size(data,1);
 
 datasets
 
+% representations
+representations = ['Path     '; 'Adjacency'; 'Ordinal  '];
+
 % initialise the user interface
 fh = figure('Visible','off','Name','TSP Tool','Position',[0,0,1024,768]);
 ah1 = axes('Parent',fh,'Position',[.1 .57 .4 .4]);
@@ -75,6 +78,11 @@ xlabel('Distance');
 ylabel('Number');
 
 ph = uipanel('Parent',fh,'Title','Settings','Position',[.55 .05 .45 .45]);
+reprpopuptxt = uicontrol(ph,'Style','text','String','Representation', ...
+    'Position', [0 290 130 20]);
+reprpopup = uicontrol(ph,'Style','popupmenu','String', ...
+    representations,'Value',REPRESENTATION, ...
+    'Position',[130 290 130 20],'Callback',@reprpopup_Callback);
 datasetpopuptxt = uicontrol(ph,'Style','text','String','Dataset', ...
     'Position', [0 260 130 20]);
 datasetpopup = uicontrol(ph,'Style','popupmenu','String',datasets,'Value',1, ...
@@ -147,6 +155,9 @@ set(fh,'Visible','on');
         set(ncitiessliderv,'String',size(data,1));
         axes(ah1);
         plot(x,y,'ko') 
+    end
+    function reprpopup_Callback(hObject, eventdata)
+        REPRESENTATION = get(hObject, 'Value');
     end
     function llooppopup_Callback(hObject,eventdata)
         lloop_value = get(hObject,'Value');
