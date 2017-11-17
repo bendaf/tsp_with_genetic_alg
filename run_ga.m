@@ -1,9 +1,9 @@
 function run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
-    PR_CROSS, PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, REPRESENTATION)
+    PR_CROSS, PR_MUT, CROSSOVER, MUTATION, LOCALLOOP, ah1, ah2, ah3, REPRESENTATION)
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
-%               PR_CROSS, PR_MUT, CROSSOVER, 
+%               PR_CROSS, PR_MUT, CROSSOVER, MUTATION, 
 %               ah1, ah2, ah3, REPRESENTATION)
 %
 %
@@ -15,11 +15,12 @@ function run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
 % PR_CROSS: probability for crossover
 % PR_MUT: probability for mutation
 % CROSSOVER: the crossover operator
+% MUTATION: the mutation operator
 % calculate distance matrix between each pair of cities
 % ah1, ah2, ah3: axes handles to visualise tsp
 % REPRESENTATION: Representation of the path.
 {NIND MAXGEN NVAR ELITIST STOP_PERCENTAGE PR_CROSS PR_MUT CROSSOVER ...
-    LOCALLOOP REPRESENTATION}
+    MUTATION LOCALLOOP REPRESENTATION}
 
         GGAP = 1 - ELITIST;
         mean_fits = zeros(1,MAXGEN+1);
@@ -67,7 +68,7 @@ function run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
         	SelCh = select('sus', Chrom, FitnV, GGAP);
         	%recombine individuals (crossover)
             SelCh = feval(CROSSOVER, SelCh, PR_CROSS, REPRESENTATION);
-            SelCh = mutateTSP('inversion', SelCh, PR_MUT, REPRESENTATION);
+            SelCh = mutateTSP(MUTATION, SelCh, PR_MUT, REPRESENTATION);
             %evaluate offspring, call objective function
         	ObjVSel = tspfun(SelCh, Dist, REPRESENTATION);
             %reinsert offspring into population

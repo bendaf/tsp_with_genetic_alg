@@ -13,6 +13,7 @@ PR_CROSS = .95;     % probability of crossover
 PR_MUT = .05;       % probability of mutation
 LOCALLOOP = 0;      % local loop removal
 CROSSOVER = 'xalt_edges';   % default crossover operator
+MUTATION = 'inversion';     % default mutation operator
 REPRESENTATION = 2; % The type of representation used in the ga. 
 % 1 - Path, 2 - Adjacency, 3 - Ordinal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,7 +104,10 @@ elitsliderv = uicontrol(ph,'Style','text','String',round(ELITIST*100), ...
     'Position',[280 80 50 20]);
 crossover = uicontrol(ph,'Style','popupmenu', 'String', ...
     {'xalt_edges', 'combin_edges'}, 'Value',1, ...
-    'Position',[10 50 130 20],'Callback',@crossover_Callback);
+    'Position',[30 50 130 20],'Callback', @crossover_Callback);
+crossover = uicontrol(ph,'Style','popupmenu', 'String', ...
+    {'inversion', 'insertion'}, 'Value', 1, ...
+    'Position',[260 50 130 20],'Callback', @mutation_Callback);
 runbutton = uicontrol(ph,'Style','pushbutton','String','START', ...
     'Position',[0 10 50 30],'Callback',@runbutton_Callback);
 
@@ -174,6 +178,12 @@ set(fh,'Visible','on');
         crossovers = get(hObject,'String');
         CROSSOVER = crossovers(crossover_value);
         CROSSOVER = CROSSOVER{1};
+    end
+    function mutation_Callback(hObject,eventdata)
+        mutation_value = get(hObject,'Value');
+        mutations = get(hObject,'String');
+        MUTATION = crossovers(mutation_value)
+        MUTATION = MUTATION{1};
     end
     function runbutton_Callback(hObject,eventdata)
         %set(ncitiesslider, 'Visible','off');
