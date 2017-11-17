@@ -2,17 +2,17 @@ function tspgui()
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-NIND = 50;		% Number of individuals
-MAXGEN = 100;		% Maximum no. of generations
-NVAR = 26;		% No. of variables
-PRECI = 1;		% Precision of variables
-ELITIST = 0.05;    % percentage of the elite population
-GGAP = 1-ELITIST;		% Generation gap
-STOP_PERCENTAGE = .95;    % percentage of equal fitness individuals for stopping
+NIND = 50;          % Number of individuals
+MAXGEN = 100;       % Maximum no. of generations
+NVAR = 26;          % No. of variables
+PRECI = 1;          % Precision of variables
+ELITIST = 0.05;     % percentage of the elite population
+GGAP = 1-ELITIST;       % Generation gap
+STOP_PERCENTAGE = .95;  % percentage of equal fitness individuals for stopping
 PR_CROSS = .95;     % probability of crossover
 PR_MUT = .05;       % probability of mutation
 LOCALLOOP = 0;      % local loop removal
-CROSSOVER = 'xalt_edges';  % default crossover operator
+CROSSOVER = 'xalt_edges';   % default crossover operator
 REPRESENTATION = 2; % The type of representation used in the ga. 
 % 1 - Path, 2 - Adjacency, 3 - Ordinal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,9 +64,6 @@ llooppopup = uicontrol(ph,'Style','popupmenu','String',{'off','on'},'Value',1, .
     'Position',[390 260 50 20],'Callback',@llooppopup_Callback); 
 ncitiesslidertxt = uicontrol(ph,'Style','text','String','# Cities', ...
     'Position',[0 230 130 20]);
-% ncitiesslider = uicontrol(ph,'Style','slider','Max',128,'Min',4, ... 
-% 'Value',NVAR,'Sliderstep',[0.012 0.05], ...
-% 'Position',[130 230 150 20],'Callback',@ncitiesslider_Callback);
 ncitiessliderv = uicontrol(ph,'Style','text','String',NVAR, ...
     'Position',[280 230 50 20]);
 nindslidertxt = uicontrol(ph,'Style','text','String','# Individuals', ...
@@ -107,8 +104,6 @@ elitsliderv = uicontrol(ph,'Style','text','String',round(ELITIST*100), ...
 crossover = uicontrol(ph,'Style','popupmenu', 'String', ...
     {'xalt_edges', 'combin_edges'}, 'Value',1, ...
     'Position',[10 50 130 20],'Callback',@crossover_Callback);
-% inputbutton = uicontrol(ph,'Style','pushbutton','String','Input', ...
-% 'Position',[55 10 70 30],'Callback',@inputbutton_Callback);
 runbutton = uicontrol(ph,'Style','pushbutton','String','START', ...
     'Position',[0 10 50 30],'Callback',@runbutton_Callback);
 
@@ -137,13 +132,6 @@ set(fh,'Visible','on');
         else
             LOCALLOOP = 1;
         end
-    end
-    function ncitiesslider_Callback(hObject,eventdata)
-        fslider_value = get(hObject,'Value');
-        slider_value = round(fslider_value);
-        set(hObject,'Value',slider_value);
-        set(ncitiessliderv,'String',slider_value);
-        NVAR = round(slider_value);
     end
     function nindslider_Callback(hObject,eventdata)
         fslider_value = get(hObject,'Value');
