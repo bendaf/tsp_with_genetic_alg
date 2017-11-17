@@ -17,35 +17,6 @@ REPRESENTATION = 2; % The type of representation used in the ga.
 % 1 - Path, 2 - Adjacency, 3 - Ordinal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% read an existing population
-% 1 -- to use the input file specified by the filename
-% 0 -- click the cities yourself, which will be saved in the file called
-%USE_FILE = 0;
-%FILENAME = 'data/cities.xy';
-%if (USE_FILE == 0)
-%    % get the input cities
-%    fg1 = figure(1);clf;
-%    %subplot(2,2,2);
-%    axis([0 1 0 1]);
-%    title(NVAR);
-%    hold on;
-%    x = zeros(NVAR,1);y = zeros(NVAR,1);
-%    for v = 1:NVAR
-%        [xi,yi] = ginput(1);
-%        x(v) = xi;
-%        y(v) = yi;
-%        plot(xi,yi, 'ko','MarkerFaceColor','Black');
-%        title(NVAR-v);
-%    end
-%    hold off;
-%    set(fg1, 'Visible', 'off');
-%    dlmwrite(FILENAME,[x y],'\t');
-%else
-%    XY = dlmread(FILENAME,'\t');
-%    x = XY(:,1);
-%    y = XY(:,2);
-%end
-
 % load the data sets
 datasetslist = dir('datasets/');datasetslist = dir('datasets/');
 datasets = cell( size(datasetslist,1)-2,1);datasets = cell( size(datasetslist,1)-2 ,1);

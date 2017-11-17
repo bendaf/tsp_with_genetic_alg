@@ -42,7 +42,7 @@ function run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
         ObjV = tspfun(Chrom, Dist, REPRESENTATION);
         best = zeros(1, MAXGEN);
         % generational loop
-        while gen<MAXGEN
+        while gen < MAXGEN
             sObjV = sort(ObjV);
           	best(gen+1) = min(ObjV);
         	minimum = best(gen+1);
