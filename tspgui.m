@@ -182,7 +182,7 @@ set(fh,'Visible','on');
     function mutation_Callback(hObject,eventdata)
         mutation_value = get(hObject,'Value');
         mutations = get(hObject,'String');
-        MUTATION = crossovers(mutation_value)
+        MUTATION = mutations(mutation_value);
         MUTATION = MUTATION{1};
     end
     function runbutton_Callback(hObject,eventdata)
@@ -193,7 +193,7 @@ set(fh,'Visible','on');
         set(crossslider,'Visible','off');
         set(elitslider,'Visible','off');
         run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, ...
-        PR_MUT, CROSSOVER, LOCALLOOP, ah1, ah2, ah3, REPRESENTATION);
+        PR_MUT, CROSSOVER, MUTATION, LOCALLOOP, ah1, ah2, ah3, REPRESENTATION);
         end_run();
     end
     function inputbutton_Callback(hObject,eventdata)
