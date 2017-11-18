@@ -19,8 +19,8 @@ REPRESENTATION = 2; % The type of representation used in the ga.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % load the data sets
-datasetslist = dir('datasets/');datasetslist = dir('datasets/');
-datasets = cell( size(datasetslist,1)-2,1);datasets = cell( size(datasetslist,1)-2 ,1);
+datasetslist = dir('datasets/');
+datasets = cell( size(datasetslist,1)-2,1);
 for i = 1:size(datasets,1);
     datasets{i} = datasetslist(i+2).name;
 end
