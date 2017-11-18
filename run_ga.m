@@ -1,10 +1,11 @@
-function run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
-    PR_CROSS, PR_MUT, CROSSOVER, MUTATION, LOCALLOOP, ah1, ah2, ah3, REPRESENTATION)
+function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
+    PR_CROSS, PR_MUT, CROSSOVER, MUTATION, LOCALLOOP, REPRESENTATION, TIME, ...
+    ah1, ah2, ah3 )
 % usage: run_ga(x, y, 
 %               NIND, MAXGEN, NVAR, 
 %               ELITIST, STOP_PERCENTAGE, 
-%               PR_CROSS, PR_MUT, CROSSOVER, MUTATION, 
-%               ah1, ah2, ah3, REPRESENTATION)
+%               PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION,
+%               TIME, ah1, ah2, ah3)
 %
 %
 % x, y: coordinates of the cities
@@ -20,8 +21,17 @@ function run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
 % ah1, ah2, ah3: axes handles to visualise tsp
 % REPRESENTATION: Representation of the path.
 {NIND MAXGEN NVAR ELITIST STOP_PERCENTAGE PR_CROSS PR_MUT CROSSOVER ...
-    MUTATION LOCALLOOP REPRESENTATION}
+    MUTATION LOCALLOOP REPRESENTATION};
 
+        if nargin < 17
+            useVisualisation = 0;
+            if nargin < 14
+                TIME = 60;
+            end
+        else
+            useVisualisation = 1;
+        end
+        tic
         GGAP = 1 - ELITIST;
         mean_fits = zeros(1,MAXGEN+1);
         worst = zeros(1,MAXGEN+1);
@@ -42,23 +52,19 @@ function run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
         % evaluate initial population
         ObjV = tspfun(Chrom, Dist, REPRESENTATION);
         best = zeros(1, MAXGEN);
+        min_len = min(ObjV);
         % generational loop
         while gen < MAXGEN
             sObjV = sort(ObjV);
-          	best(gen+1) = min(ObjV);
-        	minimum = best(gen+1);
+          	[best(gen+1), t] = min(ObjV);
+            min_len = min(best(gen+1), min_len);
             mean_fits(gen+1) = mean(ObjV);
             worst(gen+1) = max(ObjV);
-            for t = 1:size(ObjV,1)
-                if (ObjV(t) == minimum)
-                    break;
-                end
+            
+            if useVisualisation
+                visualizeTSP(x, y, conv_repr(Chrom(t, :), REPRESENTATION, 1), ...
+                    best(gen+1), ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
             end
-            
-            
-            visualizeTSP(x, y, conv_repr(Chrom(t, :), REPRESENTATION, 1), ...
-                minimum, ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
-
             if (sObjV(stopN)-sObjV(1) <= 1e-15)
                   break;
             end          
@@ -77,6 +83,9 @@ function run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ...
             Chrom = tsp_ImprovePopulation(NIND, NVAR, Chrom, LOCALLOOP, ...
                 Dist, REPRESENTATION);
         	%increment generation counter
-        	gen = gen+1;            
+        	gen = gen+1;
+            if toc > TIME
+                break;
+            end
         end
 end
