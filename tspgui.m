@@ -2,17 +2,16 @@ function tspgui()
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-NIND = 50;          % Number of individuals
-MAXGEN = 100;       % Maximum no. of generations
+NIND = 75;          % Number of individuals
+MAXGEN = 500;       % Maximum no. of generations
 NVAR = 26;          % No. of variables
-PRECI = 1;          % Precision of variables
-ELITIST = 0.05;     % percentage of the elite population
+ELITIST = 0.175;     % percentage of the elite population
 GGAP = 1-ELITIST;       % Generation gap
 STOP_PERCENTAGE = .95;  % percentage of equal fitness individuals for stopping
-PR_CROSS = .95;     % probability of crossover
-PR_MUT = .05;       % probability of mutation
-LOCALLOOP = 0;      % local loop removal
-CROSSOVER = 'xalt_edges';   % default crossover operator
+PR_CROSS = .75;     % probability of crossover
+PR_MUT = .19;       % probability of mutation
+LOCALLOOP = 1;      % local loop removal
+CROSSOVER = 'combin_edges';   % default crossover operator
 MUTATION = 'inversion';     % default mutation operator
 REPRESENTATION = 2; % The type of representation used in the ga. 
 % 1 - Path, 2 - Adjacency, 3 - Ordinal
@@ -62,7 +61,7 @@ datasetpopup = uicontrol(ph,'Style','popupmenu','String',datasets,'Value',1, ...
     'Position',[130 260 130 20],'Callback',@datasetpopup_Callback);
 llooppopuptxt = uicontrol(ph,'Style','text','String','Loop Detection', ...
     'Position',[260 260 130 20]);
-llooppopup = uicontrol(ph,'Style','popupmenu','String',{'off','on'},'Value',1, ...
+llooppopup = uicontrol(ph,'Style','popupmenu','String',{'off','on'},'Value',2, ...
     'Position',[390 260 50 20],'Callback',@llooppopup_Callback); 
 ncitiesslidertxt = uicontrol(ph,'Style','text','String','# Cities', ...
     'Position',[0 230 130 20]);
@@ -104,7 +103,7 @@ elitslider = uicontrol(ph,'Style','slider','Max',100,'Min',0,'Value', ...
 elitsliderv = uicontrol(ph,'Style','text','String',round(ELITIST*100), ...
     'Position',[280 80 50 20]);
 crossover = uicontrol(ph,'Style','popupmenu', 'String', ...
-    {'xalt_edges', 'combin_edges'}, 'Value',1, ...
+    {'xalt_edges', 'combin_edges'}, 'Value',2, ...
     'Position',[30 50 130 20],'Callback', @crossover_Callback);
 crossover = uicontrol(ph,'Style','popupmenu', 'String', ...
     {'inversion', 'insertion'}, 'Value', 1, ...
