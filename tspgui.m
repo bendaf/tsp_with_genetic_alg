@@ -194,7 +194,7 @@ set(fh,'Visible','on');
         set(crossslider,'Visible','off');
         set(elitslider,'Visible','off');
         run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, PR_CROSS, ...
-        PR_MUT, CROSSOVER, MUTATION, LOCALLOOP, ah1, ah2, ah3, REPRESENTATION);
+        PR_MUT, CROSSOVER, MUTATION, LOCALLOOP, REPRESENTATION, intmax, ah1, ah2, ah3);
         end_run();
     end
     function end_run()
