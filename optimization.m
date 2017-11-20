@@ -25,7 +25,6 @@ MUTATION = {'inversion'};
 REPRESENTATION = 2; 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 7)% ELITIST[0, 0.05, 0.1, 0.2]: 0.1, PR_CROSS[1, 0.95, 0.9, 0.8]: 0.8,
 % ELITIST[0, 0.05, 0.1, 0.2]: 0.1, PR_CROSS[1, 0.95, 0.9, 0.8]: 0.8,
 % PR_MUT[0, 0.05, 0.1, 0.2]: 0.1
 
@@ -43,3 +42,19 @@ find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESEN
 
 % NIND = [25, 50, 75, 100, 200, 300, 500, 600]: 75 (TIME: 60)
 % MAXGEN = [50, 100, 200, 300, 500, 600]: 500 (TIME: 60)
+[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10);
+plot_optimalization('Elitist local optimization', ELITIST, log, 'Elitist %', 'Route len');
+best
+
+ELITIST = 0.175;
+PR_CROSS = linspace(0.5,1,30);
+[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10);
+plot_optimalization('Crossover local optimization', PR_CROSS, log, 'Crossover %', 'Route len');
+best
+
+PR_CROSS = .75;
+PR_MUT = linspace(0,0.3,30);
+[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10);
+plot_optimalization('Mutation local optimization', PR_MUT, log, 'Mutation %', 'Route len');
+
+best
