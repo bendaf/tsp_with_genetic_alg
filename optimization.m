@@ -1,21 +1,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Number of individuals
-NIND = 50;
+NIND = 75;
 
 % Maximum no. of generations
-MAXGEN = 100;
+MAXGEN = 300;
 
 % percentage of the elite population
-ELITIST = 0.175;
+ELITIST = 0.103;
 
 % probability of crossover
-PR_CROSS = .75;
+PR_CROSS = 1;
 
 % probability of mutation
-PR_MUT = 0.19;
+PR_MUT = 0.2897;
 
 % default crossover operator
-CROSSOVER = {'combin_edges'};
+CROSSOVER = {'combin_edges', 'combin_cross_edges', 'xalt_edges'};
 
 % default mutation operator
 MUTATION = {'inversion'};
@@ -42,19 +42,6 @@ REPRESENTATION = 2;
 
 % NIND = [25, 50, 75, 100, 200, 300, 500, 600]: 75 (TIME: 60)
 % MAXGEN = [50, 100, 200, 300, 500, 600]: 500 (TIME: 60)
-[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10);
-plot_optimalization('Elitist local optimization', ELITIST, log, 'Elitist %', 'Route len');
-best
-
-ELITIST = 0.175;
-PR_CROSS = linspace(0.5,1,30);
-[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10);
-plot_optimalization('Crossover local optimization', PR_CROSS, log, 'Crossover %', 'Route len');
-best
-
-PR_CROSS = .75;
-PR_MUT = linspace(0,0.3,30);
-[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10);
-plot_optimalization('Mutation local optimization', PR_MUT, log, 'Mutation %', 'Route len');
-
+[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 20);
+plot_optimalization('Crossover local optimization', CROSSOVER, log, 'Crossover operator', 'Route len');
 best
