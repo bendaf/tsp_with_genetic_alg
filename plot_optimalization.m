@@ -1,8 +1,8 @@
 function plot_optimalization(ptitle, X, Y, pxlabel, pylabel)
     figure;
-    bar(Y)
+    plot(X,Y)
     xlabel(pxlabel)
     ylabel(pylabel)
     title(ptitle)
-    set(gca,'xticklabel',X);
+    legend('inversion','insertion');
 end

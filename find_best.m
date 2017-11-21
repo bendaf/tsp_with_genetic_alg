@@ -7,7 +7,7 @@ function [best_vars, log] = find_best(NIND, MAXGEN, ELITIST, ...
     y = data(:,2)/max([data(:,1);data(:,2)]);
     NVAR = size(data,1);
     
-    log = zeros(1,size(CROSSOVER,2));
+    log = zeros(size(MUTATION,2),size(PR_MUT,2));
     minlen = intmax;
     for nind = NIND
         for maxgen = MAXGEN
@@ -24,8 +24,8 @@ function [best_vars, log] = find_best(NIND, MAXGEN, ELITIST, ...
                                             MUTATION{mut_i}, 1, repr, TIME);
                                     end
                                     len = mean(lens);
-                                    log(cros_i) = mean(lens);
-                                    [size(log,2), nnz(log)]
+                                    log(mut_i, mutprob) = mean(lens);
+                                    [size(log,2), nnz(log(mut_i,:))]
                                     if len < minlen
                                         minlen = len;
                                         best_vars = {nind, maxgen, ELITIST(elit), ...

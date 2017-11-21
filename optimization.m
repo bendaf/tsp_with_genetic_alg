@@ -12,13 +12,13 @@ ELITIST = 0.103;
 PR_CROSS = 1;
 
 % probability of mutation
-PR_MUT = 0.2897;
+PR_MUT = linspace(0,0.4,20);
 
 % default crossover operator
-CROSSOVER = {'combin_edges', 'combin_cross_edges', 'xalt_edges'};
+CROSSOVER = {'combin_edges'};
 
 % default mutation operator
-MUTATION = {'inversion'};
+MUTATION = {'inversion', 'insertion'};
 
 % The type of representation used in the ga. 
 % 1 - Path, 2 - Adjacency, 3 - Ordinal
@@ -42,6 +42,6 @@ REPRESENTATION = 2;
 
 % NIND = [25, 50, 75, 100, 200, 300, 500, 600]: 75 (TIME: 60)
 % MAXGEN = [50, 100, 200, 300, 500, 600]: 500 (TIME: 60)
-[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 20);
-plot_optimalization('Crossover local optimization', CROSSOVER, log, 'Crossover operator', 'Route len');
+[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10);
+plot_optimalization('Mutation local optimization', PR_MUT, log, 'Mutation operator', 'Route len');
 best
