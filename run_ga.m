@@ -79,7 +79,7 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
         	%assign fitness values to entire population
         	FitnV = ranking(ObjV);
         	%select individuals for breeding
-        	SelCh = select('tournament', Chrom, FitnV, GGAP);
+        	SelCh = select('roulette_wheel', Chrom, FitnV, GGAP);
         	%recombine individuals (crossover)
             SelCh = feval(CROSSOVER, SelCh, PR_CROSS, REPRESENTATION);
             SelCh = mutateTSP(MUTATION, SelCh, PR_MUT, REPRESENTATION);
