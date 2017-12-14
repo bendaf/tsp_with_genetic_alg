@@ -54,6 +54,8 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
         best = zeros(1, MAXGEN);
         min_len = min(ObjV);
         % generational loop
+        
+        pr_mut_by_time = PR_MUT;
         while gen < MAXGEN
             sObjV = sort(ObjV);
           	[best(gen+1), t] = min(ObjV);
@@ -80,6 +82,8 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
         	FitnV = ranking(ObjV);
         	%select individuals for breeding
         	SelCh = select('roulette_wheel', Chrom, FitnV, GGAP);
+        	SelCh = select('sus', Chrom, FitnV, GGAP);
+            
         	%recombine individuals (crossover)
             SelCh = feval(CROSSOVER, SelCh, PR_CROSS, REPRESENTATION);
             SelCh = mutateTSP(MUTATION, SelCh, PR_MUT, REPRESENTATION);
@@ -95,5 +99,6 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
             if toc > TIME
                 break;
             end
+            pr_mut_by_time = pr_mut_by_time * 0.99
         end
 end
