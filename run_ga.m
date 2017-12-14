@@ -56,6 +56,8 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
         % generational loop
         
         pr_mut_by_time = PR_MUT;
+        pr_mut_inc = (PR_MUT - pr_mut_by_time) / MAXGEN;
+        
         while gen < MAXGEN
             sObjV = sort(ObjV);
           	[best(gen+1), t] = min(ObjV);
@@ -99,6 +101,6 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
             if toc > TIME
                 break;
             end
-            pr_mut_by_time = pr_mut_by_time * 0.99
+            pr_mut_by_time = pr_mut_by_time + pr_mut_inc
         end
 end
