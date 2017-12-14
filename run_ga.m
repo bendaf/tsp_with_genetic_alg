@@ -57,7 +57,7 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
         
         pr_mut_by_time = PR_MUT;
         pr_mut_inc = (PR_MUT - pr_mut_by_time) / MAXGEN;
-        
+        should_stop = intmax;
         while gen < MAXGEN
             sObjV = sort(ObjV);
           	[best(gen+1), t] = min(ObjV);
@@ -68,29 +68,34 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
             if useVisualisation
                 visualizeTSP(x, y, conv_repr(Chrom(t, :), REPRESENTATION, 1), ...
                     best(gen+1), ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
-    % stoppig criteria            
-             mean_sObjV=sum(sObjV(1:stopN))/length(sObjV);
-            var_i=(sObjV-mean_sObjV.*ones(length(sObjV))).^2;
-            var=sum(var_i)./length(sObjV);
-             if (var<= 1e-3)
-                   break;
-             end 
+%             stoppig criteria
 
-
-%             if (sObjV(stopN)-sObjV(1) <= 1e-15)
-%                   break;
-%             end          
+            
+            new_should_stop = 1/(gen+1) * max(best(1:(gen+1)))
+            if (should_stop - new_should_stop <= 1)
+                break;
+            end 
+            should_stop = new_should_stop;  
+%             mean_sObjV = sum(sObjV(1:stopN))/length(sObjV);
+%             var_i = (sObjV - mean_sObjV.*ones(length(sObjV))).^2;
+%             var = sum(var_i)./length(sObjV);
+            
+  
+            if (sObjV(stopN)-sObjV(1) <= 1e-15)
+                  break;
+            end          
         	%assign fitness values to entire population
         	FitnV = ranking(ObjV);
         	%select individuals for breeding
-        	SelCh = select('roulette_wheel', Chrom, FitnV, GGAP);
         	SelCh = select('sus', Chrom, FitnV, GGAP);
             
         	%recombine individuals (crossover)
             SelCh = feval(CROSSOVER, SelCh, PR_CROSS, REPRESENTATION);
             SelCh = mutateTSP(MUTATION, SelCh, PR_MUT, REPRESENTATION);
+            
             %evaluate offspring, call objective function
         	ObjVSel = tspfun(SelCh, Dist, REPRESENTATION);
+            
             %reinsert offspring into population
         	[Chrom ObjV] = reins(Chrom, SelCh, 1, 1, ObjV, ObjVSel);
             
@@ -101,6 +106,6 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
             if toc > TIME
                 break;
             end
-            pr_mut_by_time = pr_mut_by_time + pr_mut_inc
+            pr_mut_by_time = pr_mut_by_time + pr_mut_inc;
         end
 end
