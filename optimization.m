@@ -1,24 +1,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Number of individuals
-NIND = 75;
+NIND = 64;
 
 % Maximum no. of generations
-MAXGEN = 300;
+MAXGEN = 100;
 
 % percentage of the elite population
-ELITIST = 0.103;
+ELITIST = 0.02;
 
 % probability of crossover
-PR_CROSS = 1;
+PR_CROSS = 0.9;
 
 % probability of mutation
-PR_MUT = linspace(0,0.4,20);
+PR_MUT = 0.28;
 
 % default crossover operator
 CROSSOVER = {'combin_edges'};
 
 % default mutation operator
-MUTATION = {'inversion', 'insertion'};
+MUTATION = {'insertion'};
 
 % The type of representation used in the ga. 
 % 1 - Path, 2 - Adjacency, 3 - Ordinal
@@ -42,6 +42,5 @@ REPRESENTATION = 2;
 
 % NIND = [25, 50, 75, 100, 200, 300, 500, 600]: 75 (TIME: 60)
 % MAXGEN = [50, 100, 200, 300, 500, 600]: 500 (TIME: 60)
-[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10);
-plot_optimalization('Mutation local optimization', PR_MUT, log, 'Mutation operator', 'Route len');
-best
+[ best, log] = find_best(NIND, MAXGEN, ELITIST, PR_CROSS, PR_MUT, CROSSOVER, MUTATION, REPRESENTATION, 60, 10)
+%plot_optimalization('Mutation local optimization', PR_MUT, log, 'Mutation operator', 'Route len');

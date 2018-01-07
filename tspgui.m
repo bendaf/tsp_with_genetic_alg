@@ -2,17 +2,15 @@ function tspgui()
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-NIND = 75;          % Number of individuals
-MAXGEN = 500;       % Maximum no. of generations
-NVAR = 26;          % No. of variables
-ELITIST = 0.175;     % percentage of the elite population
-GGAP = 1-ELITIST;       % Generation gap
-STOP_PERCENTAGE = .95;  % percentage of equal fitness individuals for stopping
-PR_CROSS = .75;     % probability of crossover
-PR_MUT = .5;       % probability of mutation
+NIND = 64;          % Number of individuals
+MAXGEN = 100;       % Maximum no. of generations
+ELITIST = 0.02;     % percentage of the elite population
+STOP_PERCENTAGE = 1;  % percentage of equal fitness individuals for stopping
+PR_CROSS = .9;     % probability of crossover
+PR_MUT = .28;       % probability of mutation
 LOCALLOOP = 1;      % local loop removal
 CROSSOVER = 'combin_edges';   % default crossover operator
-MUTATION = 'inversion';     % default mutation operator
+MUTATION = 'insertion';     % default mutation operator
 REPRESENTATION = 2; % The type of representation used in the ga. 
 % 1 - Path, 2 - Adjacency, 3 - Ordinal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,8 +27,6 @@ data = load(['datasets/' datasets{1}]);
 x = data(:,1);
 y = data(:,2);
 NVAR = size(data,1);
-
-datasets
 
 % representations
 representations = ['Path     '; 'Adjacency'; 'Ordinal  '];
@@ -171,7 +167,6 @@ set(fh,'Visible','on');
         set(hObject,'Value',slider_value);
         set(elitsliderv,'String',slider_value);
         ELITIST = round(slider_value)/100;
-        GGAP = 1-ELITIST;
     end
     function crossover_Callback(hObject,eventdata)
         crossover_value = get(hObject,'Value');

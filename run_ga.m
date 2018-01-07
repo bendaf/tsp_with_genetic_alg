@@ -68,22 +68,18 @@ function min_len = run_ga(x, y, NIND, MAXGEN, NVAR, ELITIST, STOP_PERCENTAGE, ..
             if useVisualisation
                 visualizeTSP(x, y, conv_repr(Chrom(t, :), REPRESENTATION, 1), ...
                     best(gen+1), ah1, gen, best, mean_fits, worst, ah2, ObjV, NIND, ah3);
-%             stoppig criteria
-
+            end
             
-            new_should_stop = 1/(gen+1) * max(best(1:(gen+1)))
+            % stoppig criteria
+            new_should_stop = 1/(gen+1) * max(best(1:(gen+1)));
             if (should_stop - new_should_stop <= 1)
                 break;
             end 
-            should_stop = new_should_stop;  
-%             mean_sObjV = sum(sObjV(1:stopN))/length(sObjV);
-%             var_i = (sObjV - mean_sObjV.*ones(length(sObjV))).^2;
-%             var = sum(var_i)./length(sObjV);
+            should_stop = new_should_stop;
             
-  
-            if (sObjV(stopN)-sObjV(1) <= 1e-15)
-                  break;
-            end          
+%             if (sObjV(stopN)-sObjV(1) <= 1e-15)
+%                   break;
+%             end          
         	%assign fitness values to entire population
         	FitnV = ranking(ObjV);
         	%select individuals for breeding
